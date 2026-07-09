@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+
+
+        <!-- Top News Start-->
+        <div class="top-news">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 tn-left">
+                        <div class="tn-img">
+                            <img src="{{ lastest_news.cover.url }}" style="width: 100%; height: 530px; object-fit: cover;" />
+                            <div class="tn-content">
+                                <div class="tn-content-inner">
+                                    <a class="tn-date" href="{% url 'single' lastest_news.slug %}"><i class="far fa-clock"></i>{{ lastest_news.created_at }}</a>
+                                    <a class="tn-title" href="{% url 'single' lastest_news.slug %}">{{ lastest_news.title }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 tn-right">
+                        <div class="row">
+                            {% for n in lastest_new %}
+                            <div class="col-md-6">
+                                <div class="tn-img">
+                                    <img src="{{ n.cover.url }}" style="width: 100%; height: 250px; object-fit: cover;" />
+                                    <div class="tn-content">
+                                        <div class="tn-content-inner">
+                                            <a class="tn-date" href="url 'single' lastest_new.slug"><i class="far fa-clock"></i>{{n.created_at}}</a>
+                                            <a class="tn-title" href="{% url 'single' n.slug %}">{{ n.title }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top News End--><!-- Category News Start-->
+        <div class="cat-news">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2><i class="fas fa-align-justify"></i>Sport</h2>
+                        <div class="row cn-slider">
+                            {% for n in categories_new %}
+                            <div class="col-md-6">
+                                <div class="cn-img">
+                                    <img src="{{n.cover.url}}" style="width: 100%; height: 225px; object-fit: cover;" />
+                                    <div class="cn-content">
+                                        <div class="cn-content-inner">
+                                            <a class="cn-date" href=""><i class="far fa-clock"></i>{{n.created_at}}</a>
+                                            <a class="cn-title" href="{% url 'single' n.slug %}">{{n.title}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2><i class="fas fa-align-justify"></i>Texnologiya</h2>
+                        <div class="row cn-slider">
+                            {% for i in technoly_new %}
+                            <div class="col-md-6">
+                                <div class="cn-img">
+                                    <img src="{{i.cover.url}}" style="width: 100%; height: 225px; object-fit: cover;" />
+                                    <div class="cn-content">
+                                        <div class="cn-content-inner">
+                                            <a class="cn-date" href=""><i class="far fa-clock"></i>{{ i.created_at}}</a>
+                                            <a class="cn-title" href="{% url 'single' n.slug %}">{{i.title}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category News End--><!-- Category News Start-->
+        <div class="cat-news">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2><i class="fas fa-align-justify"></i>Iqtisodiyot</h2>
+                        <div class="row cn-slider">
+                            {% for i in iqtisod_new %}
+                            <div class="col-md-6">
+                                <div class="cn-img">
+                                    <img src="{{ i.cover.url }}" style="width: 100%; height: 225px; object-fit: cover;" />
+                                    <div class="cn-content">
+                                        <div class="cn-content-inner">
+                                            <a class="cn-date" href=""><i class="far fa-clock"></i>{{ i.created_at }}</a>
+                                            <a class="cn-title" href="{% url 'single' i.slug %}">{{ i.title }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2><i class="fas fa-align-justify"></i>Ta'lim</h2>
+                        <div class="row cn-slider">
+                            {% for i in edu_new %}
+                            <div class="col-md-6">
+                                <div class="cn-img">
+                                    <img src="{{ i.cover.url }}" style="width: 100%; height: 225px; object-fit: cover;" />
+                                    <div class="cn-content">
+                                        <div class="cn-content-inner">
+                                            <a class="cn-date" href=""><i class="far fa-clock"></i>{{i.created_at}}</a>
+                                            <a class="cn-title" href="{% url 'single' i.fslug %}">{{i.title}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category News End-->
+
+
+        <!-- Main News Start-->
+        <div class="main-news">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2><i class="fas fa-align-justify"></i>Oxirgi yangiliklar</h2>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mn-img">
+                                            <img src="{{ latest_new.cover.url }}" style="width: 100%; height: 350px; object-fit: cover;" />
+                                        </div>
+                                        <div class="mn-content">
+                                            <a class="mn-title" href="">{{ latest_new.title }}</a>
+                                            <a class="mn-date" href=""><i class="far fa-clock"></i>{{ latest_new.created_at }}</a>
+                                            <p class="mn-text-slice">
+                                                {{ latest_new.body }}
+                                            </p>
+                                        </div>
+                                    </div><div class="col-lg-6">
+                                        {% for i in news %}
+                                        <div class="mn-list" style="margin-bottom: 15px;">
+                                            <div class="mn-img" style="width: 100px; height: 75px; float: left; margin-right: 15px;">
+                                                <img src="{{ i.cover.url }}" style="width: 100%; height: 100%; object-fit: cover;" />
+                                            </div>
+                                            <div class="mn-content">
+                                                <a class="mn-title" href="">{{ i.title }}</a>
+                                                <a class="mn-date" href=""><i class="far fa-clock"></i>{{ i.created_at }}</a>
+                                            </div>
+                                            <div style="clear: both;"></div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+
+                                </div> </div>
+
+                            <div class="col-md-12" style="margin-top: 30px;">
+                                <h2><i class="fas fa-align-justify"></i>Mashhur Yangiliklar</h2>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mn-img">
+                                            <img src="{{latest_new.cover.url}}" />
+                                        </div>
+                                        <div class="mn-content">
+                                            <a class="mn-title" href="">{{latest_new.title}}</a>
+                                            <a class="mn-date" href=""><i class="far fa-clock"></i>{{latest_new.created_at}}</a>
+                                            <p>
+                                                {{latest_new.title}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        {% for i in news %}
+                                        <div class="mn-list">
+                                            <div class="mn-img">
+                                                <img src="{{i.cover.url}}" />
+                                            </div>
+                                            <div class="mn-content">
+                                                <a class="mn-title" href="">{{i.title}}</a>
+                                                <a class="mn-date" href=""><i class="far fa-clock"></i>{{i.created_at}}</a>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="sidebar">
+                            <div class="sidebar-widget">
+                                <h2><i class="fas fa-align-justify"></i>Kategoriyalar</h2>
+                                <div class="category">
+                                    <ul class="fa-ul">
+                                        {% for i in categories_new %}
+                                        <li><span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span><a href="">{{i.name}}</a></li>
+                                        {% endfor%}
+                                    </ul>
+                                </div>
+                            </div><div class="sidebar-widget">
+                                <h2><i class="fas fa-align-justify"></i>Taglar</h2>
+                                <div class="tags">
+                                    {% for i in tag %}
+                                    <a href="">{{i.name}}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="sidebar-widget">
+                                <h2><i class="fas fa-align-justify"></i>Reklama uchun1</h2>
+                                <div class="image">
+                                    <a href=""><img src="" alt="Image"></a>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-widget">
+                                <h2><i class="fas fa-align-justify"></i>Reklama uchun2</h2>
+                                <div class="image">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <a href=""><img src="" alt="Image"></a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a href=""><img src="" alt="Image"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       {% endblock content %}
+
+

@@ -1,0 +1,458 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* ===== Single Page Comments ===== */
+    .comments-section {
+        max-width: 800px;
+        margin: 40px auto 60px auto;
+        padding: 0 20px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .comments-section h3 {
+        font-size: 22px;
+        color: #222;
+        margin: 0 0 8px 0;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #222;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .comments-section h3 .badge-count {
+        background: #222;
+        color: #fff;
+        font-size: 13px;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+    .comments-subtitle {
+        color: #888;
+        font-size: 14px;
+        margin: 0 0 24px 0;
+    }
+
+    /* Comment form */
+    .comment-form {
+        background: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 22px;
+        margin-bottom: 30px;
+    }
+    .comment-form-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+    .comment-form-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #222;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .comment-form-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .comment-form-user {
+        font-size: 14px;
+        font-weight: 600;
+        color: #222;
+    }
+    .comment-form-user small {
+        font-weight: 400;
+        color: #888;
+        font-size: 12px;
+        display: block;
+        margin-top: 2px;
+    }
+    .comment-form textarea {
+        width: 100%;
+        min-height: 110px;
+        padding: 14px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+        resize: vertical;
+        box-sizing: border-box;
+        background: #fff;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .comment-form textarea:focus {
+        outline: none;
+        border-color: #222;
+        box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.08);
+    }
+    .comment-form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 14px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .comment-form-hint {
+        color: #888;
+        font-size: 12px;
+    }
+    .btn-submit-comment {
+        background: #222;
+        color: #fff;
+        border: none;
+        padding: 11px 28px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .btn-submit-comment:hover {
+        background: #000;
+    }
+    .btn-submit-comment:active {
+        transform: scale(0.98);
+    }
+
+    /* Comment list */
+    .comments-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .comment-item {
+        display: flex;
+        gap: 14px;
+        padding: 18px 0;
+        border-bottom: 1px solid #eee;
+    }
+    .comment-item:last-child {
+        border-bottom: none;
+    }
+    .comment-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #222;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 18px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .comment-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .comment-content {
+        flex: 1;
+        min-width: 0;
+    }
+    .comment-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+        flex-wrap: wrap;
+    }
+    .comment-author {
+        font-weight: 600;
+        color: #222;
+        font-size: 14px;
+    }
+    .comment-time {
+        color: #888;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .comment-body {
+        color: #333;
+        font-size: 14px;
+        line-height: 1.6;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+    .empty-comments {
+        text-align: center;
+        padding: 40px 20px;
+        color: #888;
+        background: #fafafa;
+        border-radius: 8px;
+        border: 1px dashed #ddd;
+    }
+    .empty-comments i {
+        font-size: 32px;
+        color: #ccc;
+        display: block;
+        margin-bottom: 12px;
+    }
+
+    /* Login prompt */
+    .login-prompt {
+        background: linear-gradient(135deg, #222 0%, #444 100%);
+        color: #fff;
+        border-radius: 8px;
+        padding: 26px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .login-prompt i {
+        font-size: 30px;
+        margin-bottom: 12px;
+        opacity: 0.9;
+    }
+    .login-prompt h4 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+    }
+    .login-prompt p {
+        margin: 0 0 18px 0;
+        opacity: 0.85;
+        font-size: 14px;
+    }
+    .login-prompt a {
+        display: inline-block;
+        background: #fff;
+        color: #222;
+        padding: 10px 24px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .login-prompt a:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Alerts */
+    .alert {
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin-bottom: 18px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .alert-success {
+        background: #e6f4ea;
+        color: #137333;
+        border-left: 3px solid #137333;
+    }
+    .alert-error {
+        background: #fdecea;
+        color: #b32a25;
+        border-left: 3px solid #b32a25;
+    }
+
+    @media (max-width: 600px) {
+        .comment-form-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .comment-form-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .btn-submit-comment {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                    <li class="breadcrumb-item active">Yangilik tafsilotlari</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+
+
+        <!-- Single News Start-->
+        <div class="single-news">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="sn-img">
+                            {% if article.cover %}
+                                <img src="{{ article.cover.url }}" alt="{{ article.title }}" />
+                            {% endif %}
+                        </div>
+                        <div class="sn-content">
+                            <a class="sn-title" href="">{{ article.title }}</a>
+
+                            <!-- SANA VA KO'RILGANLAR SONI BLOKI -->
+                            <div class="sn-meta" style="margin-bottom: 15px; display: flex; gap: 15px; align-items: center;">
+                                <span class="sn-date" style="color: #888; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
+                                    <i class="far fa-clock"></i> {{ article.created_at }}
+                                </span>
+                                <span class="sn-views" style="color: #888; font-size: 14px; display: inline-flex; align-items: center; gap: 5px;">
+                                    <i class="fas fa-eye"></i> {{ article.views_count }} marta ko'rildi
+                                </span>
+                            </div>
+
+                            <p>{{ article.body }}</p>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="comments-section">
+
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <h3>
+                                <i class="fas fa-comments"></i>
+                                Fikrlar
+                                <span class="badge-count">{{ comments|length }}</span>
+                            </h3>
+                            <p class="comments-subtitle">Ushbu yangilik haqidagi fikrlaringizni bildiring</p>
+
+                            {% if user.is_authenticated %}
+                                <!-- Comment form (login qilganlar uchun) -->
+                                <form method="POST" class="comment-form">
+                                    {% csrf_token %}
+                                    <div class="comment-form-header">
+                                        <div class="comment-form-avatar">
+                                            {% if user.profile.avatar %}
+                                                <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
+                                            {% else %}
+                                                {{ user.username|first|upper }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="comment-form-user">
+                                            {{ user.get_full_name|default:user.username }}
+                                            <small>Siz fikr bildiryapsiz</small>
+                                        </div>
+                                    </div>
+                                    <textarea name="body"
+                                              placeholder="Fikringizni yozing... ({{ user.username }})"
+                                              required></textarea>
+                                    <div class="comment-form-actions">
+                                        <span class="comment-form-hint">
+                                            <i class="fas fa-info-circle"></i> Fikr matni bo'sh bo'lmasligi kerak
+                                        </span>
+                                        <button type="submit" class="btn-submit-comment">
+                                            <i class="fas fa-paper-plane"></i> Yuborish
+                                        </button>
+                                    </div>
+                                </form>
+                            {% else %}
+                                <!-- Login qilmaganlar uchun -->
+                                <div class="login-prompt">
+                                    <i class="fas fa-lock"></i>
+                                    <h4>Fikr qoldirish uchun tizimga kiring</h4>
+                                    <p>Yangilik haqida o'z fikringizni bildirish uchun avval hisobingizga kiring yoki yangi hisob yarating.</p>
+                                    <a href="{% url 'login' %}?next={{ request.path }}">
+                                        <i class="fas fa-sign-in-alt"></i> Tizimga kirish
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                            <!-- Izohlar ro'yxati -->
+                            {% if comments %}
+                                <ul class="comments-list">
+                                    {% for comment in comments %}
+                                        <li class="comment-item">
+                                            <div class="comment-avatar">
+                                                {% if comment.author.profile.avatar %}
+                                                    <img src="{{ comment.author.profile.avatar.url }}" alt="{{ comment.author.username }}">
+                                                {% else %}
+                                                    {{ comment.author.username|first|upper }}
+                                                {% endif %}
+                                            </div>
+                                            <div class="comment-content">
+                                                <div class="comment-meta">
+                                                    <span class="comment-author">
+                                                        {{ comment.author.get_full_name|default:comment.author.username }}
+                                                    </span>
+                                                    <span class="comment-time">
+                                                        <i class="far fa-clock"></i>
+                                                        {{ comment.created_at|date:"d.m.Y H:i" }}
+                                                    </span>
+                                                </div>
+                                                <div class="comment-body">{{ comment.body }}</div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <div class="empty-comments">
+                                    <i class="far fa-comment-dots"></i>
+                                    Hozircha fikrlar yo'q. Birinchi bo'lib fikr bildiring!
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="sidebar">
+                            <div class="sidebar-widget">
+                                <h2><i class="fas fa-align-justify"></i>Kategoriya</h2>
+                                <div class="category">
+                                    <ul class="fa-ul">
+                                        <li>
+                                            <span class="fa-li"><i class="far fa-arrow-alt-circle-right"></i></span>
+                                            <a href="">{{ article.category.name }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-widget">
+                                <h2><i class="fas fa-align-justify"></i>Teglar</h2>
+                                <div class="tags">
+                                    <a href="">Mahalliy</a>
+                                    <a href="">Xorijiy</a>
+                                    <a href="">Iqtisodiyot</a>
+                                    <a href="">Sport</a>
+                                    <a href="">Ta'lim</a>
+                                    <a href="">Texnologiya</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Single News End-->
+
+{% endblock content %}

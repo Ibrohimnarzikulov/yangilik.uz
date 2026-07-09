@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uz">
+    <head>
+        <meta charset="utf-8">
+        <title>News 24 - Eng So'nggi Yangiliklar</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Bootstrap Ecommerce Template" name="keywords">
+        <meta content="Bootstrap Ecommerce Template Free Download" name="description">
+
+        <link href="img/favicon.ico" rel="icon">
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/slick/slick.css" rel="stylesheet">
+        <link href="lib/slick/slick-theme.css" rel="stylesheet">
+
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="top-header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="logo">
+                            <a href="">
+                                <img src="{% static 'img/logo.png' %}" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-4">
+                        <div class="search">
+                            <input type="text" placeholder="Qidiruv">
+                            <button><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="social">
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                            <a href=""><i class="fab fa-facebook"></i></a>
+                            <a href=""><i class="fab fa-linkedin"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href=""><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header">
+            <div class="container">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                    <a href="#" class="navbar-brand">MENYU</a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button><div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav m-auto">
+                            <a href="{% url 'home' %}" class="nav-item nav-link active">Bosh sahifa</a>
+                            <a href="{% url 'local_news' %}" class="nav-item nav-link">Mahalliy</a>
+                            <a href="{% url 'global_news' %}" class="nav-item nav-link">Xorijiy</a>
+                            <a href="{% url 'technology_news' %}" class="nav-item nav-link">Texnologiya</a>
+                            <a href="{% url 'sports' %}" class="nav-item nav-link">Sport</a>
+                            <a href="{% url 'edu' %}" class="nav-item nav-link">Ta'lim</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item">Sub Item 1</a>
+                                    <a href="#" class="dropdown-item">Sub Item 2</a>
+                                </div>
+                            </div>
+                            <a href="{% url 'contact' %}" class="nav-item nav-link">Biz bilan Bog'lanish</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+       <main class="py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-5 border-bottom pb-3 font-weight-bold" style="color: #111; font-size: 2rem;">Global Yangiliklar</h1>
+
+        <div class="row">
+            {% for i in global_news %}
+            <div class="col-lg-6 mb-4">
+                <div class="card border-0 bg-transparent">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-sm-4">
+                            <a href="{% url 'single' i.slug %}">
+                                <img src="{{ i.cover.url }}" class="img-fluid rounded w-100" alt="{{ i.title }}" style="height: 110px; object-fit: cover;">
+                            </a>
+                        </div>
+                        <div class="col-sm-8 pl-sm-3 pt-2 pt-sm-0">
+                            <div class="text-muted small mb-1">
+                                <a href="{% url 'single' i.slug %}" >
+                                    <i class="far fa-clock mr-1"></i>{{ i.created_at }}
+                                </a>
+                            </div>
+                            <h5 class="font-weight-bold h6 mb-0" style="line-height: 1.4;">
+                                <a href="{% url 'single' i.slug %}" class="text-dark text-decoration-none">{{ i.title }}</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h3 class="title">Foydali havolalar</h3>
+                            <ul>
+                                <li><a href="#">Biz haqimizda</a></li>
+                                <li><a href="#">Reklama berish</a></li>
+                                <li><a href="#">Maxfiylik siyosati</a></li>
+                                <li><a href="#">Foydalanish shartlari</a></li>
+                                <li><a href="#">Bog'lanish</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h3 class="title">Tezkor havolalar</h3>
+                            <ul>
+                                <li><a href="#">Sport</a></li>
+                                <li><a href="#">Texnologiya</a></li>
+                                <li><a href="#">Iqtisodiyot</a></li>
+                                <li><a href="#">Ta'lim</a></li>
+                                <li><a href="#">Moda</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h3 class="title">Biz bilan bog'laning</h3>
+                            <div class="contact-info">
+                                <p><i class="fa fa-map-marker"></i>Samarqand shahri, Toyloq tumani</p>
+                                <p><i class="fa fa-envelope"></i>hojiyevdavron65@gmail.com</p>
+                                <p><i class="fa fa-phone"></i>+998931445307</p>
+                                <p><i class="fa fa-phone"></i>+998942673389</p>
+                                <div class="social">
+                                    <a href=""><i class="fab fa-twitter"></i></a>
+                                    <a href=""><i class="fab fa-facebook"></i></a>
+                                    <a href=""><i class="fab fa-linkedin"></i></a>
+                                    <a href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h3 class="title">Obuna bo'ling</h3>
+                            <div class="newsletter">
+                                <p>
+                                    Eng so'nggi yangiliklar va maqolalardan birinchilardan bo'lib xabardor bo'lish uchun email manzilingizni qoldiring
+                                </p>
+                                <form method="POST" action="#">
+                                    {% csrf_token %}
+                                    <input class="form-control" type="email" placeholder="Email manzilingiz" name="email" required>
+                                    <button class="btn">Obuna</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 copyright">
+                        <p>Mualliflik huquqi &copy; 2026 News24. Barcha huquqlar himoyalangan</p>
+                    </div>
+
+                    <div class="col-md-6 template-by">
+                        <p>Shablon muallifi: <a href="Xojiyev Davron">Xojiyev Davron</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/slick/slick.min.js"></script>
+
+
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>
